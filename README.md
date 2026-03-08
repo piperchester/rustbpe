@@ -31,9 +31,8 @@ pip install rustbpe
 ```bash
 git clone https://github.com/karpathy/rustbpe.git
 cd rustbpe
-uv venv && source .venv/bin/activate
-uv pip install maturin
-maturin develop --release
+make setup
+make dev
 ```
 
 ## Usage
@@ -125,22 +124,21 @@ tokenizer.train_from_iterator(
 ```bash
 git clone https://github.com/karpathy/rustbpe.git
 cd rustbpe
-uv venv && source .venv/bin/activate
-uv pip install maturin pytest
-maturin develop
+make setup
+make dev
 ```
 
 ### Running tests
 
 ```bash
 # Rust tests (fast, tests core algorithm)
-cargo test
+make test-rust
 
-# Python tests (requires maturin develop first)
-pytest tests/python/ -v -s
+# Python tests (builds extension first)
+make test-python
 
 # Both
-cargo test && pytest tests/python/ -v
+make test
 ```
 
 ### Project structure

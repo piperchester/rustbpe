@@ -24,6 +24,9 @@ ahash = "0.8.12"
 rayon = "1.11.0"
 compact_str = "0.9.0"
 
+[build-dependencies]
+pyo3-build-config = "0.27"
+
 [dev-dependencies]
 # For Rust-side testing
 criterion = "0.5"  # benchmarking (optional)

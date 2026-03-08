@@ -1,4 +1,9 @@
-.PHONY: build test test-rust test-python dev install lint fmt clean
+.PHONY: build test test-rust test-python dev install setup lint fmt clean
+
+# Create venv and install build dependencies
+setup:
+	uv venv
+	uv pip install maturin pytest
 
 # Build Rust release binary
 build:
@@ -11,19 +16,19 @@ test-rust:
 # Run all tests (Rust + Python)
 test: test-rust test-python
 
-# Run Python tests (builds extension first)
+# Run Python tests (builds extension first, run make setup first)
 test-python:
-	maturin build --release
+	uv run maturin build --release
 	uv pip install target/wheels/*.whl --force-reinstall
-	uv run pytest tests/python/ -v
+	uv run pytest tests/python/ -v -s
 
-# Local development: build Python extension in-place
+# Local development: build Python extension in-place (run make setup first)
 dev:
-	maturin develop --release
+	uv run maturin develop --release
 
-# Install Python package for local use
+# Install Python package for local use (run make setup first)
 install:
-	maturin build --release
+	uv run maturin build --release
 	uv pip install target/wheels/*.whl
 
 # Lint Rust code
